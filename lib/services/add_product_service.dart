@@ -21,14 +21,11 @@ class AddProduct {
         'category': category,
         'image': img,
       });
-      print('------- before ---------');
       Response response =
           await ApiRequest().post(url: _baseUrl, data: formData);
-      print('------- done ---------');
       //return true;
       return ProductModel.fromJson(response.data);
     } catch (e) {
-      print('---ERROR--$e');
       throw Exception(e);
     }
   }

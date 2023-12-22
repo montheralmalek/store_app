@@ -37,15 +37,15 @@ class ItemCrad extends StatelessWidget {
                         product.title,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style:
-                            TextStyle(color: Color(0xff666666), fontSize: 14),
+                        style: const TextStyle(
+                            color: Color(0xff666666), fontSize: 14),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             '\$ ${product.price}',
-                            style: TextStyle(fontSize: 14),
+                            style: const TextStyle(fontSize: 14),
                           ),
                           IconButton(
                               onPressed: () {},

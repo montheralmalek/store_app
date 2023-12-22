@@ -7,9 +7,11 @@ class GetCategories {
   Future<List<CategoryModel>> getData() async {
     try {
       Response response = await ApiRequest().get(httpUrl: mainUrl);
+      List<dynamic> data = response.data;
       List<CategoryModel> categoriesList = [];
-      for (var element in response.data) {
-        categoriesList.add(CategoryModel.fromJson(element));
+      for (var element in data) {
+        categoriesList
+            .add(CategoryModel.fromJson(element, "assets/$element.jpg"));
       }
       return categoriesList;
     } catch (e) {

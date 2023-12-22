@@ -26,17 +26,14 @@ class UpdateProduct {
       }
       if (body.isNotEmpty) {
         FormData formData = FormData.fromMap(body);
-        print('------- before ---------');
-        Response response =
-            await ApiRequest().put(url: '$_baseUrl/$productId', data: formData);
-        print('------- done ---------');
+        // Response response =
+        await ApiRequest().put(url: '$_baseUrl/$productId', data: formData);
         return true;
       } else {
         throw Exception('Ther is no data to update');
       }
       //ProductModel.fromJson(response.data);
     } catch (e) {
-      print('---ERROR--$e');
       throw Exception(e);
     }
   }

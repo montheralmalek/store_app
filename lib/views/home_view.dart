@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/app_config/responsive.dart';
-import 'package:store_app/models/product_model.dart';
-import 'package:store_app/services/get_products_service.dart';
-import 'package:store_app/widgets/item_card.dart';
+import 'package:store_app/widgets/categories_listview_builder.dart';
+import 'package:store_app/widgets/products_listview_builder.dart';
 
 class HomeView extends StatelessWidget {
   static String id = 'homeView';
@@ -11,56 +9,47 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('New Trend')),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: FutureBuilder<List<ProductModel>>(
-          future: GetProducts().getData(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: Responsive().getResponsiveValue(
-                      context: context,
-                      forShortScreen: 2,
-                      forTabletScreen: 3,
-                      forMediumScreen: 4,
-                      forLargeScreen: 6,
-                      forMobLandScapeMode: 4),
-                  childAspectRatio: 4 / 5,
-                ),
-                itemCount: snapshot.data!.length,
-                itemBuilder: (context, index) {
-                  return ItemCrad(product: snapshot.data![index]);
-                },
-              );
-            } else if (snapshot.hasError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('${snapshot.error.toString()}  press Reload button'),
-                    ElevatedButton(
-                      onPressed: () =>
-                          Navigator.pushNamed(context, HomeView.id),
-                      child: const SizedBox(
-                        width: 100,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [Text('Reload'), Icon(Icons.refresh)],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              );
-            } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          },
+      appBar: AppBar(
+        title: const Text('New Trend'),
+        actions: const [
+          Icon(
+            Icons.search,
+            size: 26,
+          )
+        ],
+        leading: const Icon(
+          Icons.list,
+          size: 32,
         ),
+      ),
+      body: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(
+            child: CategoriesListViewBuilder(),
+          ),
+          SliverToBoxAdapter(
+            child: Container(
+              height: 40,
+              width: double.maxFinite,
+              color: Theme.of(context).colorScheme.primary,
+              child: Container(
+                height: 30,
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+            sliver: ProductsListViewBuilder(),
+          ),
+        ],
       ),
     );
   }
