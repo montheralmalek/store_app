@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:store_app/helper/functions.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/services/get_products_service.dart';
+import 'package:store_app/views/home_view.dart';
 import 'package:store_app/widgets/item_card.dart';
 
 class ProductsListViewBuilder extends StatelessWidget {
@@ -27,7 +28,8 @@ class ProductsListViewBuilder extends StatelessWidget {
             },
           );
         } else if (snapshot.hasError) {
-          return SliverToBoxAdapter(child: snapshotError(snapshot, context));
+          return SliverToBoxAdapter(
+              child: snapshotError(context, 'There is an error!', HomeView.id));
         } else {
           return const SliverToBoxAdapter(
             child: Center(

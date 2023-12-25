@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/views/add_product.dart';
 import 'package:store_app/widgets/categories_listview_builder.dart';
 import 'package:store_app/widgets/products_listview_builder.dart';
 
@@ -50,6 +51,19 @@ class HomeView extends StatelessWidget {
             sliver: ProductsListViewBuilder(),
           ),
         ],
+      ),
+      floatingActionButton: Container(
+        height: 60,
+        width: 60,
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius: BorderRadius.circular(50)),
+        child: IconButton(
+          color: Theme.of(context).colorScheme.onPrimary,
+          iconSize: 32,
+          icon: const Icon(Icons.add),
+          onPressed: () => Navigator.pushNamed(context, AddProductView.id),
+        ),
       ),
     );
   }

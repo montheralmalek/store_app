@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:store_app/helper/functions.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/services/update_product_sevice.dart';
 import 'package:store_app/widgets/custom_button.dart';
@@ -137,22 +138,6 @@ class _UpdateProductViewState extends State<UpdateProductView> {
           )
           // This trailing comma makes auto-formatting nicer for build methods.
           ),
-    );
-  }
-
-  void showMessage(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        showCloseIcon: true,
-        content: Container(
-          height: 60,
-          alignment: Alignment.center,
-          child: Text(
-            message,
-            style: const TextStyle(fontSize: 18),
-          ),
-        ),
-      ),
     );
   }
 }

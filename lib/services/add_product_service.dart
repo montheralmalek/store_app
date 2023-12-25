@@ -6,7 +6,7 @@ class AddProduct {
   final Dio dio = Dio();
 
   final String _baseUrl = 'https://fakestoreapi.com/products';
-  Future<ProductModel> add({
+  Future<bool> add({
     required String title,
     required double price,
     required String description,
@@ -14,17 +14,16 @@ class AddProduct {
     required String img,
   }) async {
     try {
-      FormData formData = FormData.fromMap({
-        'title': title,
-        'price': price,
-        'description': description,
-        'category': category,
-        'image': img,
-      });
-      Response response =
-          await ApiRequest().post(url: _baseUrl, data: formData);
+      Map<String, dynamic> body = {};
+      body.addAll({'title': title});
+      body.addAll({'description': description});
+      body.addAll({'price': price});
+      body.addAll({'image': img});
+      FormData formData = FormData.fromMap(body);
+
+      await ApiRequest().post(url: _baseUrl, data: formData);
       //return true;
-      return ProductModel.fromJson(response.data);
+      return true; //ProductModel.fromJson(response.data);
     } catch (e) {
       throw Exception(e);
     }

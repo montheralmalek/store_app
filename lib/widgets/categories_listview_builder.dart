@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:store_app/helper/functions.dart';
 import 'package:store_app/services/get_categories_service.dart';
+import 'package:store_app/views/home_view.dart';
 import 'package:store_app/widgets/category_card_widget.dart';
 
 class CategoriesListViewBuilder extends StatelessWidget {
@@ -34,7 +35,7 @@ class CategoriesListViewBuilder extends StatelessWidget {
               ),
             );
           } else if (snapshot.hasError) {
-            return snapshotError(snapshot, context);
+            return snapshotError(context, 'There is an error!', HomeView.id);
           } else {
             return const Center(
               child: CircularProgressIndicator(),
