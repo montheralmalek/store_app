@@ -24,23 +24,26 @@ class _AddProductViewState extends State<AddProductView> {
         title: Text(AddProductView.id),
       ),
       body: Center(
-        child: FutureBuilder(
-            future: GetCategories().getData(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                if (categoryList.isEmpty) {
-                  for (var item in snapshot.data!) {
-                    categoryList.add(item.name);
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(8.0),
+          child: FutureBuilder(
+              future: GetCategories().getData(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (categoryList.isEmpty) {
+                    for (var item in snapshot.data!) {
+                      categoryList.add(item.name);
+                    }
                   }
+                  // dropdownValue = categoryList.first;
+                  return AddProductForm(categoryList: categoryList);
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
-                // dropdownValue = categoryList.first;
-                return AddProductForm(categoryList: categoryList);
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            }),
+              }),
+        ),
       ),
     );
   }

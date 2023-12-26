@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:store_app/helper/api_request.dart';
-import 'package:store_app/models/product_model.dart';
 
 class AddProduct {
   final Dio dio = Dio();
