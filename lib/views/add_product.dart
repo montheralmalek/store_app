@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:store_app/services/get_categories_service.dart';
 import 'package:store_app/widgets/add_product_form.dart';
 
 class AddProductView extends StatefulWidget {
@@ -23,26 +22,10 @@ class _AddProductViewState extends State<AddProductView> {
       appBar: AppBar(
         title: Text(AddProductView.id),
       ),
-      body: Center(
+      body: const Center(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(8.0),
-          child: FutureBuilder(
-              future: GetCategories().getData(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  if (categoryList.isEmpty) {
-                    for (var item in snapshot.data!) {
-                      categoryList.add(item.name);
-                    }
-                  }
-                  // dropdownValue = categoryList.first;
-                  return AddProductForm(categoryList: categoryList);
-                } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
+          padding: EdgeInsets.all(8.0),
+          child: AddProductForm(),
         ),
       ),
     );

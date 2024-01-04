@@ -1,69 +1,146 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/views/add_product.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/get_home_data/get_home_data_cubit.dart';
+import 'package:store_app/cubits/get_home_data/home_data_cubit_states.dart';
 import 'package:store_app/widgets/categories_listview_builder.dart';
+import 'package:store_app/widgets/failure_load.dart';
+import 'package:store_app/widgets/floating_action_button.dart';
+import 'package:store_app/widgets/image_carousel_slider.dart';
+import 'package:store_app/widgets/main_app_bar.dart';
+import 'package:store_app/widgets/main_bottom_navigation_bar.dart';
 import 'package:store_app/widgets/products_listview_builder.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   static String id = 'homeView';
 
   const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final PageController _pageController = PageController();
+
+  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('New Trend'),
-        actions: const [
-          Icon(
-            Icons.search,
-            size: 26,
-          )
-        ],
-        leading: const Icon(
-          Icons.list,
-          size: 32,
-        ),
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: MainAppBar(),
       ),
-      body: CustomScrollView(
-        slivers: [
-          const SliverToBoxAdapter(
-            child: CategoriesListViewBuilder(),
-          ),
-          SliverToBoxAdapter(
-            child: Container(
-              height: 40,
-              width: double.maxFinite,
-              color: Theme.of(context).colorScheme.primary,
-              child: Container(
-                height: 30,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.background,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          const SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-            sliver: ProductsListViewBuilder(),
-          ),
-        ],
+      bottomNavigationBar: MainBottomNavigationBar(
+        selectedItem: _selectedIndex,
+        onTap: (value) {
+          setState(() {
+            _selectedIndex = value;
+            _pageController.jumpToPage(value);
+          });
+        },
       ),
-      floatingActionButton: Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            borderRadius: BorderRadius.circular(50)),
-        child: IconButton(
-          color: Theme.of(context).colorScheme.onPrimary,
-          iconSize: 32,
-          icon: const Icon(Icons.add),
-          onPressed: () => Navigator.pushNamed(context, AddProductView.id),
-        ),
+      body: BlocBuilder<GetHomeDataCubit, HomeDataStates>(
+        builder: (context, state) {
+          return PageView.builder(
+              controller: _pageController,
+              itemCount: 4,
+              onPageChanged: (value) {
+                setState(() {
+                  _selectedIndex = value;
+                });
+              },
+              itemBuilder: (context, index) {
+                if (index == 0) {
+                  if (state is HomeDataInitialState) {
+                    BlocProvider.of<GetHomeDataCubit>(context).getHomeData();
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    ); //Text('HomeDataInitialState');
+                  } else if (state is SuccessLoadedState) {
+                    return CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: ImageCarouselSlider(
+                            imageList: state.categoriesList!,
+                          ),
+                        ),
+                        SliverToBoxAdapter(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 15),
+                            child: CategoriesListViewBuilder(
+                              categoriesList: state.categoriesList!,
+                            ),
+                          ),
+                        ),
+                        SliverPadding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 15),
+                          sliver: ProductsListViewBuilder(
+                            productsList: state.productsList,
+                          ),
+                        ),
+                      ],
+                    );
+                  } else {
+                    return Center(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: FailureLoad(
+                          error: state is FailureLoadState
+                              ? state.error
+                              : 'Something Is Erorr!',
+                          onPressed: () =>
+                              BlocProvider.of<GetHomeDataCubit>(context)
+                                  .getHomeData(),
+                        ),
+                      ),
+                    );
+                  }
+                } else if (index == 1) {
+                  return Center(
+                    child: Text(
+                      'products page $index',
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w800),
+                    ),
+                  );
+                } else if (index == 2) {
+                  return Center(
+                    child: Text(
+                      'cart page $index',
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w800),
+                    ),
+                  );
+                } else {
+                  return Center(
+                    child: Text(
+                      'favorite page $index',
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w800),
+                    ),
+                  );
+                }
+              });
+        },
+      ),
+      floatingActionButton: const CustomFloatingActionButton(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
+  }
+}
+
+class HomeInitial extends StatelessWidget {
+  const HomeInitial({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return const SliverToBoxAdapter(
+      child: Center(
+        child: CircularProgressIndicator(),
       ),
     );
   }

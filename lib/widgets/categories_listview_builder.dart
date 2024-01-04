@@ -1,46 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:store_app/helper/functions.dart';
-import 'package:store_app/services/get_categories_service.dart';
-import 'package:store_app/views/home_view.dart';
+import 'package:store_app/models/category_model.dart';
 import 'package:store_app/widgets/category_card_widget.dart';
 
 class CategoriesListViewBuilder extends StatelessWidget {
   const CategoriesListViewBuilder({
     super.key,
+    required this.categoriesList,
   });
-
+  final List<CategoryModel> categoriesList;
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: GetCategories().getData(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return Container(
-              height: 112,
-              color: Theme.of(context).colorScheme.primary,
-              padding: const EdgeInsets.symmetric(vertical: 6),
-              //color: const Color(0xffffaa66),
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: snapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Row(
-                    children: [
-                      CategoryCardWidget(categories: snapshot.data![index]),
-                      const Gap(10),
-                    ],
-                  );
-                },
+    return Container(
+      height: 112,
+      color: Theme.of(context).colorScheme.background,
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      //color: const Color(0xffffaa66),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categoriesList.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Row(
+            children: [
+              CategoryCardWidget(
+                categories: categoriesList[index],
+                width: 100,
               ),
-            );
-          } else if (snapshot.hasError) {
-            return snapshotError(context, 'There is an error!', HomeView.id);
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+              const Gap(10),
+            ],
+          );
+        },
+      ),
+    );
   }
 }

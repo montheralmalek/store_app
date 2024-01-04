@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
+import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit_states.dart';
 import 'package:store_app/models/category_model.dart';
+import 'package:store_app/widgets/failure_load.dart';
 import 'package:store_app/widgets/products_listview_builder.dart';
 
 class CategoryProductsView extends StatefulWidget {
@@ -16,73 +20,107 @@ class _CategoryProductsViewState extends State<CategoryProductsView> {
   Widget build(BuildContext context) {
     final CategoryModel category =
         ModalRoute.of(context)!.settings.arguments as CategoryModel;
-    return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            // backgroundColor: ,
-            automaticallyImplyLeading: false,
-            centerTitle: false,
-            pinned: true,
-            expandedHeight: 200,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Image(
-                image: AssetImage(category.img),
-                width: double.maxFinite,
-                fit: BoxFit.cover,
+    return BlocProvider(
+      create: (context) => GetCustomProductsCubit(),
+      child: Scaffold(
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+              // backgroundColor: ,
+              automaticallyImplyLeading: false,
+              centerTitle: false,
+              pinned: true,
+              expandedHeight: 200,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Image(
+                  image: AssetImage(category.img),
+                  width: double.maxFinite,
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            toolbarHeight: 80,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircularIconButton(
-                  icon: Icons.clear,
-                  size: 40,
-                  onPressed: () => Navigator.pop(context),
-                ),
-                CircularIconButton(
-                  icon: Icons.search,
-                  size: 40,
-                  onPressed: () {},
-                ),
-              ],
-            ),
-            bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(15),
-              child: Container(
-                //height: double.infinity,
-                width: double.maxFinite,
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .primary, //.withOpacity(0.9),
-                    borderRadius: const BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
-                    )),
-
-                child: Text(
-                  category.name.toUpperCase(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 22,
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    fontWeight: FontWeight.w800,
+              toolbarHeight: 80,
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CircularIconButton(
+                    icon: Icons.clear,
+                    size: 40,
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  CircularIconButton(
+                    icon: Icons.search,
+                    size: 40,
+                    onPressed: () {},
+                  ),
+                ],
+              ),
+              bottom: PreferredSize(
+                preferredSize: const Size.fromHeight(15),
+                child: Container(
+                  width: double.maxFinite,
+                  alignment: Alignment.center,
+                  padding: const EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary, //.withOpacity(0.9),
+                      borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      )),
+                  child: Text(
+                    category.name.toUpperCase(),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.w800,
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-          SliverPadding(
-            padding: const EdgeInsets.all(8.0),
-            sliver: ProductsListViewBuilder(
-              category: category.name,
+            SliverPadding(
+              padding: const EdgeInsets.all(8.0),
+              sliver: Builder(builder: (context) {
+                return BlocBuilder<GetCustomProductsCubit,
+                    GetCustomProductsStates>(
+                  builder: (context, state) {
+                    if (state is GetCustomProductsInitialState) {
+                      BlocProvider.of<GetCustomProductsCubit>(context)
+                          .getCustomProducts(category: category.name);
+                      return const SliverToBoxAdapter(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      ); //Text('HomeDataInitialState');
+                    } else if (state is SuccessLoadedState) {
+                      return ProductsListViewBuilder(
+                          category: category.name,
+                          productsList: state.productsList);
+                    } else {
+                      return SliverToBoxAdapter(
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: FailureLoad(
+                              error: state is FailureLoadState
+                                  ? state.error
+                                  : 'Something Is Erorr!',
+                              onPressed: () => BlocProvider.of<
+                                      GetCustomProductsCubit>(context)
+                                  .getCustomProducts(category: category.name),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
+                );
+              }),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

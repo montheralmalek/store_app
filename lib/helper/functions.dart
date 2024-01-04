@@ -1,24 +1,5 @@
 import 'package:flutter/material.dart';
 
-Column snapshotError(BuildContext context, String error, String routName) {
-  return Column(
-    mainAxisAlignment: MainAxisAlignment.center,
-    children: [
-      Text('$error . press Reload button'),
-      ElevatedButton(
-        onPressed: () => Navigator.pushReplacementNamed(context, routName),
-        child: const SizedBox(
-          width: 100,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text('Reload'), Icon(Icons.refresh)],
-          ),
-        ),
-      )
-    ],
-  );
-}
-
 void showMessage(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(
     SnackBar(

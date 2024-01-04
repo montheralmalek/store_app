@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:store_app/helper/functions.dart';
 import 'package:store_app/services/add_product_service.dart';
+import 'package:store_app/services/get_categories_service.dart';
 import 'package:store_app/widgets/custom_button.dart';
 import 'package:store_app/widgets/custom_dropdown_menu.dart';
 import 'package:store_app/widgets/customtextfield.dart';
@@ -10,25 +11,26 @@ import 'package:store_app/widgets/customtextfield.dart';
 class AddProductForm extends StatefulWidget {
   const AddProductForm({
     super.key,
-    required this.categoryList,
   });
-  final List<String> categoryList;
+
   @override
   State<AddProductForm> createState() => _AddProductFormState();
 }
 
 class _AddProductFormState extends State<AddProductForm> {
   final TextEditingController titleController = TextEditingController();
-
   final TextEditingController descriptioController = TextEditingController();
-
   final TextEditingController priceController = TextEditingController();
-
   final TextEditingController imageController = TextEditingController();
-
   final GlobalKey<FormState> _formKeyState = GlobalKey();
   String categoryValue = '';
   bool _isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
@@ -74,24 +76,32 @@ class _AddProductFormState extends State<AddProductForm> {
               prefixicon: const Icon(Icons.image),
             ),
             const Gap(10),
-            ///////////////////////////////////////
-            ////////////////
-            // Expanded(
-            //     child: Container(
-            //   height: 30,
-            //   color: Colors.amber,
-            // )),
-            CustomDropdownMenu(
-              label: 'category',
-              list: widget.categoryList,
-              onPressed: (String? value) {
-                // This is called when the user selects an item.
-                setState(() {
-                  categoryValue = value!;
-                });
-              },
-            ),
-
+            FutureBuilder(
+                future: GetCategoriesService().getData(),
+                builder: (context, snapshot) {
+                  List<String> categoryList = [];
+                  if (snapshot.hasData) {
+                    for (var item in snapshot.data!) {
+                      categoryList.add(item.name);
+                    }
+                    return CustomDropdownMenu(
+                      label: 'category',
+                      list: categoryList,
+                      onPressed: (String? value) {
+                        // This is called when the user selects an item.
+                        setState(() {
+                          categoryValue = value!;
+                        });
+                      },
+                    );
+                  } else {
+                    return Container(
+                      alignment: Alignment.center,
+                      height: 50,
+                      child: const CircularProgressIndicator(),
+                    );
+                  }
+                }),
             const Gap(25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

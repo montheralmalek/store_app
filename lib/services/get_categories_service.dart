@@ -2,8 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:store_app/helper/api_request.dart';
 import 'package:store_app/models/category_model.dart';
 
-class GetCategories {
+class GetCategoriesService {
   final String mainUrl = 'https://fakestoreapi.com/products/categories';
+
   Future<List<CategoryModel>> getData() async {
     try {
       Response response = await ApiRequest().get(httpUrl: mainUrl);
