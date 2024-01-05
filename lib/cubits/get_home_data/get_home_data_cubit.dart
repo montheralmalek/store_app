@@ -21,4 +21,9 @@ class GetHomeDataCubit extends Cubit<HomeDataStates> {
       emit(FailureLoadState(error: e.toString()));
     }
   }
+
+  refereshData() async {
+    emit(HomeDataInitialState());
+    await getHomeData();
+  }
 }

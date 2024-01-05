@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubits/get_home_data/get_home_data_cubit.dart';
 import 'package:store_app/views/add_product.dart';
 import 'package:store_app/views/category_product_view.dart';
-import 'package:store_app/views/home_view.dart';
+import 'package:store_app/views/home_view/home_view.dart';
 import 'package:store_app/views/update_product_view.dart';
 
 void main() {

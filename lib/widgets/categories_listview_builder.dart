@@ -13,7 +13,7 @@ class CategoriesListViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 112,
-      color: Theme.of(context).colorScheme.background,
+      // color: Theme.of(context).colorScheme.background,
       padding: const EdgeInsets.symmetric(vertical: 6),
       //color: const Color(0xffffaa66),
       child: ListView.builder(
