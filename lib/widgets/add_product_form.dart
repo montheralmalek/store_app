@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit.dart';
+import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit_states.dart';
 import 'package:store_app/helper/functions.dart';
 import 'package:store_app/services/add_product_service.dart';
 import 'package:store_app/services/get_categories_service.dart';
@@ -25,11 +28,7 @@ class _AddProductFormState extends State<AddProductForm> {
   final GlobalKey<FormState> _formKeyState = GlobalKey();
   String categoryValue = '';
   bool _isLoading = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  List<String> categoryList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -76,32 +75,32 @@ class _AddProductFormState extends State<AddProductForm> {
               prefixicon: const Icon(Icons.image),
             ),
             const Gap(10),
-            FutureBuilder(
-                future: GetCategoriesService().getData(),
-                builder: (context, snapshot) {
-                  List<String> categoryList = [];
-                  if (snapshot.hasData) {
-                    for (var item in snapshot.data!) {
-                      categoryList.add(item.name);
-                    }
-                    return CustomDropdownMenu(
-                      label: 'category',
-                      list: categoryList,
-                      onPressed: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          categoryValue = value!;
-                        });
-                      },
-                    );
-                  } else {
-                    return Container(
-                      alignment: Alignment.center,
-                      height: 50,
-                      child: const CircularProgressIndicator(),
-                    );
+            BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesStates>(
+              builder: (context, state) {
+                if (state is GetAllCategoriesLoadedState) {
+                  categoryList.clear();
+                  for (var item in state.categoriesList!) {
+                    categoryList.add(item.name);
                   }
-                }),
+                  return CustomDropdownMenu(
+                    label: 'category',
+                    list: categoryList,
+                    onPressed: (String? value) {
+                      // This is called when the user selects an item.
+                      setState(() {
+                        categoryValue = value!;
+                      });
+                    },
+                  );
+                } else {
+                  return Container(
+                    alignment: Alignment.center,
+                    height: 50,
+                    child: const CircularProgressIndicator(),
+                  );
+                }
+              },
+            ),
             const Gap(25),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

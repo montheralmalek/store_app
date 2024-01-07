@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:store_app/cubits/get_home_data/get_home_data_cubit.dart';
+import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit.dart';
+import 'package:store_app/cubits/get_all_products/get_all_products_cubit.dart';
 import 'package:store_app/views/add_product.dart';
 import 'package:store_app/views/category_product_view.dart';
 import 'package:store_app/views/home_view/home_view.dart';
@@ -15,8 +16,15 @@ class StoreApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => GetHomeDataCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => GetAllProductsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => GetAllCategoriesCubit(),
+        ),
+      ],
       child: MaterialApp(
         routes: {
           HomeView.id: (context) => const HomeView(),

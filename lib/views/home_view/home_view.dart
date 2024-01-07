@@ -71,7 +71,7 @@ class _HomeViewState extends State<HomeView> {
             }
           }),
       floatingActionButton: const CustomFloatingActionButton(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }
