@@ -11,10 +11,12 @@ class CustomFloatingActionButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(bottom: 30),
       child: FloatingActionButton(
+        elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         child: const Icon(
-          Icons.add,
+          Icons.chat,
           size: 32,
+          //color: Theme.of(context).colorScheme.primary,
         ),
         onPressed: () => Navigator.pushNamed(context, AddProductView.id),
       ),

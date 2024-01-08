@@ -6,7 +6,6 @@ import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cub
 import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit_states.dart';
 import 'package:store_app/helper/functions.dart';
 import 'package:store_app/services/add_product_service.dart';
-import 'package:store_app/services/get_categories_service.dart';
 import 'package:store_app/widgets/custom_button.dart';
 import 'package:store_app/widgets/custom_dropdown_menu.dart';
 import 'package:store_app/widgets/customtextfield.dart';
