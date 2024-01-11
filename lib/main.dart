@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:store_app/cubits/get_all_products/get_all_products_cubit.dart';
+import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/views/add_product.dart';
 import 'package:store_app/views/category_product_view.dart';
 import 'package:store_app/views/home_view/home_view.dart';
+import 'package:store_app/views/product_view.dart';
 import 'package:store_app/views/update_product_view.dart';
 
 void main() {
@@ -18,11 +20,14 @@ class StoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
+        BlocProvider<GetAllProductsCubit>(
           create: (context) => GetAllProductsCubit(),
         ),
-        BlocProvider(
+        BlocProvider<GetAllCategoriesCubit>(
           create: (context) => GetAllCategoriesCubit(),
+        ),
+        BlocProvider<GetCustomProductsCubit>(
+          create: (context) => GetCustomProductsCubit(),
         ),
       ],
       child: MaterialApp(
@@ -31,6 +36,7 @@ class StoreApp extends StatelessWidget {
           UpdateProductView.id: (context) => const UpdateProductView(),
           CategoryProductsView.id: (context) => const CategoryProductsView(),
           AddProductView.id: (context) => const AddProductView(),
+          ProductView.id: (context) => const ProductView(),
         },
         initialRoute: HomeView.id,
         debugShowCheckedModeBanner: false,
@@ -43,6 +49,7 @@ class StoreApp extends StatelessWidget {
             elevation: 0,
             centerTitle: true,
           ),
+          fontFamily: 'Khand',
         ),
         home: const HomeView(),
       ),

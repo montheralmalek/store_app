@@ -31,7 +31,7 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
                   Container(
             margin: const EdgeInsets.symmetric(horizontal: 6),
             child: CategoryCardWidget(
-              categories: widget.imageList[itemIndex],
+              category: widget.imageList[itemIndex],
               width: double.infinity,
               circularRadius: 10,
             ),

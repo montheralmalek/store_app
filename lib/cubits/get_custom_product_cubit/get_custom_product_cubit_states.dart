@@ -4,12 +4,12 @@ class GetCustomProductsStates {}
 
 class GetCustomProductsInitialState extends GetCustomProductsStates {}
 
-class SuccessLoadedState extends GetCustomProductsStates {
+class GetCustomProductsLoadedState extends GetCustomProductsStates {
   final List<ProductModel> productsList;
-  SuccessLoadedState({required this.productsList});
+  GetCustomProductsLoadedState({required this.productsList});
 }
 
-class FailureLoadState extends GetCustomProductsStates {
+class GetCustomProductsFailureState extends GetCustomProductsStates {
   final String error;
-  FailureLoadState({required this.error});
+  GetCustomProductsFailureState({required this.error});
 }

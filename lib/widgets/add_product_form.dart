@@ -132,8 +132,9 @@ class _AddProductFormState extends State<AddProductForm> {
                         _isLoading = false;
                       });
                     },
-                    text: 'Save',
-                    icon: Icons.save,
+                    text: const Text('Save'),
+                    icon: const Icon(Icons.save),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 const Gap(10),
@@ -143,8 +144,9 @@ class _AddProductFormState extends State<AddProductForm> {
                     onTap: () async {
                       Navigator.pop(context);
                     },
-                    text: 'Cancel',
-                    icon: Icons.cancel,
+                    text: const Text('Cancel'),
+                    icon: const Icon(Icons.cancel),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                 ),
               ],

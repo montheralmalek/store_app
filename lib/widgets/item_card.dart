@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
+import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/models/product_model.dart';
-import 'package:store_app/views/update_product_view.dart';
+import 'package:store_app/views/product_view.dart';
 
 class ItemCrad extends StatelessWidget {
   const ItemCrad({
@@ -13,8 +15,11 @@ class ItemCrad extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, UpdateProductView.id,
-          arguments: product),
+      onTap: () {
+        BlocProvider.of<GetCustomProductsCubit>(context)
+            .getCustomProducts(category: product.category);
+        Navigator.pushNamed(context, ProductView.id, arguments: product);
+      },
       child: LayoutBuilder(builder: (context, constraints) {
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),

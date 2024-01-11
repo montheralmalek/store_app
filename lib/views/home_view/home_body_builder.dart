@@ -35,9 +35,7 @@ class HomeBodyBiulder extends StatelessWidget {
                         Theme.of(context).colorScheme.primary.withOpacity(0.3),
                     margin: bodymargin,
                     padding: bodyPadding,
-                    child: CategoriesListViewBuilder(
-                      categoriesList: state.categoriesList!,
-                    ),
+                    child: const CategoriesListViewBuilder(),
                   )
                 ],
               );
@@ -46,7 +44,7 @@ class HomeBodyBiulder extends StatelessWidget {
                 error: state is GetAllCategoriesFailureLoadState
                     ? state.error
                     : 'Something Is Erorr!',
-                onPressed: () => BlocProvider.of<GetAllProductsCubit>(context)
+                onPressed: () => BlocProvider.of<GetAllCategoriesCubit>(context)
                     .refereshData(),
               );
             }

@@ -114,8 +114,8 @@ class _UpdateProductViewState extends State<UpdateProductView> {
                                 _isLoading = false;
                               });
                             },
-                            text: 'Submit',
-                            icon: Icons.save,
+                            text: const Text('Submit'),
+                            icon: const Icon(Icons.save),
                           ),
                         ),
                         const Gap(10),
@@ -125,8 +125,8 @@ class _UpdateProductViewState extends State<UpdateProductView> {
                             onTap: () async {
                               Navigator.pop(context);
                             },
-                            text: 'Cancel',
-                            icon: Icons.cancel,
+                            text: const Text('Cancel'),
+                            icon: const Icon(Icons.cancel),
                           ),
                         ),
                       ],

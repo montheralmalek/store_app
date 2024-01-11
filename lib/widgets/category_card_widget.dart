@@ -1,23 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/models/category_model.dart';
 import 'package:store_app/views/category_product_view.dart';
 
 class CategoryCardWidget extends StatelessWidget {
   const CategoryCardWidget({
     super.key,
-    required this.categories,
+    required this.category,
     required this.width,
     this.circularRadius = 100,
   });
-  final CategoryModel categories;
+  final CategoryModel category;
   final double width;
   final double circularRadius;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        BlocProvider.of<GetCustomProductsCubit>(context)
+            .getCustomProducts(category: category.name);
         Navigator.pushNamed(context, CategoryProductsView.id,
-            arguments: categories);
+            arguments: category);
       },
       child: Container(
         clipBehavior: Clip.hardEdge,
@@ -26,7 +30,7 @@ class CategoryCardWidget extends StatelessWidget {
         //margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage(categories.img),
+            image: AssetImage(category.img),
             fit: BoxFit.cover,
           ),
           borderRadius: BorderRadius.circular(circularRadius),
@@ -39,7 +43,7 @@ class CategoryCardWidget extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
           color: const Color.fromARGB(105, 77, 77, 77),
           child: Text(
-            categories.name,
+            category.name,
             style: const TextStyle(
               color: Colors.white,
               fontSize: 16,

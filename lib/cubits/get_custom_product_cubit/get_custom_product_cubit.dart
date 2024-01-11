@@ -9,10 +9,11 @@ class GetCustomProductsCubit extends Cubit<GetCustomProductsStates> {
 
   getCustomProducts({required String category}) async {
     try {
+      emit(GetCustomProductsInitialState());
       productsList = await GetProductsService().getData(categoryName: category);
-      emit(SuccessLoadedState(productsList: productsList!));
+      emit(GetCustomProductsLoadedState(productsList: productsList!));
     } catch (e) {
-      emit(FailureLoadState(error: e.toString()));
+      emit(GetCustomProductsFailureState(error: e.toString()));
     }
   }
 }

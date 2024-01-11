@@ -41,6 +41,7 @@ dependencies:
   curved_navigation_bar: ^1.0.3
   flutter_bloc: ^8.1.3
   carousel_slider: ^4.2.1
+  expandable_text: ^2.3.0
 
 dev_dependencies:
   flutter_test:
@@ -80,12 +81,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
+  fonts:
+    - family: Khand
+      fonts:
+        - asset: assets/fonts/Khand/Khand-Regular.ttf
+       # - asset: assets/fonts/Khand/Khand-Medium.ttf  
+       # - asset: fonts/Schyler-Italic.ttf
+          
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
