@@ -14,6 +14,8 @@ class CustomTextFormField extends StatelessWidget {
     this.onsave,
     this.inputType,
     this.maxlines = 1,
+    this.initialValue,
+    this.textAlign = TextAlign.start,
   });
   final TextInputType? inputType;
   final String? hinttext;
@@ -24,15 +26,20 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function(String?)? onsave;
+  final String? initialValue;
+  final TextAlign textAlign;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textAlign: textAlign,
+      initialValue: initialValue,
       validator: validator,
       onSaved: onsave,
       keyboardType: inputType,
       controller: controller,
       maxLines: maxlines,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         prefixIcon: prefixicon,
         suffixIcon: suffixicon,
         border: const OutlineInputBorder(),

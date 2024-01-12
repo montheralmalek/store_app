@@ -4,6 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/views/product_view.dart';
+import 'package:store_app/widgets/circular_icon_button.dart';
+import 'package:store_app/widgets/rate_product_show_widget.dart';
 
 class ItemCrad extends StatelessWidget {
   const ItemCrad({
@@ -49,66 +51,35 @@ class ItemCrad extends StatelessWidget {
                         image: NetworkImage(product.img),
                         //fit: BoxFit.,
                       ),
+                      //** ------- Favorite Button ----------- */
                       Positioned(
                         top: 5,
                         right: 5,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.shade100,
-                            ),
-                            child: const Icon(
-                              Icons.favorite_border,
-                              // size: 22,
-                            ),
-                          ),
+                        child: CircularIconButton(
+                          icon: Icons.favorite_border,
+                          backgroundColor: Colors.grey.shade100,
+                          size: 40,
+                          onPressed: () {},
                         ),
                       ),
+                      //** ------- Rate Show ----------- */
                       Positioned(
                         bottom: 5,
                         left: 5,
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 8),
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                          child: const Row(
-                            children: [
-                              Text('4.5'),
-                              Gap(5),
-                              Icon(
-                                Icons.star,
-                                size: 18,
-                                color: Colors.amber,
-                              ),
-                            ],
-                          ),
+                        child: RateProductShowWidget(
+                          rateValue: 4.5,
+                          backgroundColor: Colors.grey.shade100,
                         ),
                       ),
+                      //** ------- Add To Cart Button ----------- */
                       Positioned(
                         bottom: 5,
                         right: 5,
-                        child: GestureDetector(
-                          onTap: () {},
-                          child: Container(
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.all(5),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.grey.shade100,
-                            ),
-                            child: const Icon(
-                              Icons.add_shopping_cart_outlined,
-                              // size: 22,
-                            ),
-                          ),
+                        child: CircularIconButton(
+                          icon: Icons.add_shopping_cart_outlined,
+                          backgroundColor: Colors.grey.shade100,
+                          size: 40,
+                          onPressed: () {},
                         ),
                       ),
                     ],

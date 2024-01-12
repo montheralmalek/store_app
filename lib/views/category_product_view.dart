@@ -42,13 +42,15 @@ class _CategoryProductsViewState extends State<CategoryProductsView> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircularIconButton(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
                   icon: Icons.clear,
-                  size: 40,
                   onPressed: () => Navigator.pop(context),
                 ),
                 CircularIconButton(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.8),
                   icon: Icons.search,
-                  size: 40,
                   onPressed: () {},
                 ),
               ],
