@@ -12,7 +12,7 @@ class GetCategoriesService {
       List<CategoryModel> categoriesList = [];
       for (var element in data) {
         categoriesList
-            .add(CategoryModel.fromJson(element, "assets/$element.jpg"));
+            .add(CategoryModel.fromJson(element, "assets/images/$element.jpg"));
       }
       return categoriesList;
     } catch (e) {

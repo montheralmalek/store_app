@@ -20,10 +20,11 @@ class HomeBodyBiulder extends StatelessWidget {
           child: BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesStates>(
               builder: (context, state) {
             if (state is GetAllCategoriesInitialState) {
-              BlocProvider.of<GetAllCategoriesCubit>(context).getHomeData();
+              BlocProvider.of<GetAllCategoriesCubit>(context)
+                  .getAllCategoreis();
               return const Center(
                 child: CircularProgressIndicator(),
-              ); //Text('HomeDataInitialState');
+              );
             } else if (state is GetAllCategoriesLoadedState) {
               return Column(
                 children: [
@@ -55,7 +56,7 @@ class HomeBodyBiulder extends StatelessWidget {
           sliver: BlocBuilder<GetAllProductsCubit, GetAllProductsStates>(
             builder: (context, state) {
               if (state is GetAllProductsInitialState) {
-                BlocProvider.of<GetAllProductsCubit>(context).getHomeData();
+                BlocProvider.of<GetAllProductsCubit>(context).getAllProducts();
                 return const SliverToBoxAdapter(
                   child: Center(
                     child: CircularProgressIndicator(),

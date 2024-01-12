@@ -28,6 +28,7 @@ class ProductView extends StatefulWidget {
 class _ProductViewState extends State<ProductView> {
   final TextEditingController _quantity = TextEditingController();
   late ProductModel product;
+  final Color _highlightColor = Colors.blueGrey.shade50;
   // @override
   // void initState() {
   //   product = ModalRoute.of(context)!.settings.arguments as ProductModel;
@@ -49,48 +50,81 @@ class _ProductViewState extends State<ProductView> {
               child: Column(
                 children: [
                   //**------------- Title ------------------*/
-                  SizedBox(
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
                     width: double.maxFinite,
+                    decoration: BoxDecoration(
+                        color: _highlightColor,
+                        border: Border.all(color: _highlightColor),
+                        borderRadius: const BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10))),
                     child: Text(
                       product.title,
                       style: const TextStyle(fontSize: 18),
                     ),
                   ),
                   //const Gap(10),
-                  const Divider(),
+                  // const Divider(),
                   //**------------- Image ------------------*/
-                  Image(
-                    image: NetworkImage(product.img),
-                    height: 200,
-                  ),
-                  //**------------- Price and Rate ------------------*/
-                  Row(
-                    children: [
-                      //**------------- Price ------------------*/
-                      Text(
-                        ' ${product.price}',
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.red,
-                          decoration: TextDecoration.lineThrough,
-                          decorationThickness: 2,
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 10),
+                    width: double.maxFinite,
+                    decoration: BoxDecoration(
+                      border: Border.symmetric(
+                        vertical: BorderSide(
+                          color: _highlightColor,
                         ),
                       ),
-                      const Gap(5),
-                      Text('${product.price}  \$'),
-                      //**------------- Rate ------------------*/
-                      const Expanded(child: SizedBox()),
-                      const RateProductShowWidget(
-                        rateValue: 4.5,
-                      ),
-                      //** ----------- Share Button ----------- */
-                      CircularIconButton(
-                        icon: Icons.share,
-                        iconSize: 18,
-                        size: 30,
-                        onPressed: _onShare,
-                      ),
-                    ],
+                    ),
+                    child: Image(
+                      image: NetworkImage(product.img),
+                      height: 200,
+                    ),
+                  ),
+                  //**------------- Price and Rate ------------------*/
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: _highlightColor,
+                      border: Border.all(color: _highlightColor),
+                      borderRadius: const BorderRadius.only(
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
+                    ),
+                    child: Row(
+                      children: [
+                        //**------------- Price ------------------*/
+                        Text(
+                          ' ${product.price}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            color: Colors.red,
+                            decoration: TextDecoration.lineThrough,
+                            decorationThickness: 2,
+                          ),
+                        ),
+                        const Gap(5),
+                        Text(
+                          '${product.price}  \$',
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                        //**------------- Rate ------------------*/
+                        const Expanded(child: SizedBox()),
+                        const RateProductShowWidget(
+                          rateValue: 4.5,
+                        ),
+                        //** ----------- Share Button ----------- */
+                        CircularIconButton(
+                          icon: Icons.share,
+                          iconSize: 18,
+                          size: 30,
+                          onPressed: _onShare,
+                        ),
+                      ],
+                    ),
                   ),
                   const Divider(),
                   //**------------- colors ------------------*/
@@ -104,13 +138,25 @@ class _ProductViewState extends State<ProductView> {
                       const Gap(10),
                       Expanded(
                         child: ColorRadioList(colorsList: [
-                          Colors.amber.value,
-                          Colors.green.value,
+                          Colors.grey.value,
+                          Colors.white.value,
                           Colors.black.value
                         ]),
                       )
                     ],
                   ),
+                  const Divider(),
+                  //**------------- Category ------------------*/
+                  Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                    const Text(
+                      'Category:',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    const Gap(5),
+                    Text(
+                      product.category,
+                    ),
+                  ]),
                   const Divider(),
                   //**------------- Description ------------------*/
                   ListTile(
@@ -179,7 +225,7 @@ class _ProductViewState extends State<ProductView> {
             height: 130,
             padding: const EdgeInsets.all(8.0),
             //width: double.infinity,
-            color: Colors.grey.shade300,
+            color: _highlightColor,
             child: Column(
               children: [
                 MinusAddTextFieldWidget(controller: _quantity),

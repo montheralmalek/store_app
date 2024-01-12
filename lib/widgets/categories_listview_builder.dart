@@ -15,7 +15,7 @@ class CategoriesListViewBuilder extends StatelessWidget {
     return BlocBuilder<GetAllCategoriesCubit, GetAllCategoriesStates>(
       builder: (context, state) {
         if (state is GetAllCategoriesInitialState) {
-          BlocProvider.of<GetAllCategoriesCubit>(context).getHomeData();
+          BlocProvider.of<GetAllCategoriesCubit>(context).getAllCategoreis();
           return const Center(
             child: CircularProgressIndicator(),
           ); //Text('HomeDataInitialState');

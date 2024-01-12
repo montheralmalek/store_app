@@ -5,9 +5,10 @@ import 'package:store_app/services/get_categories_service.dart';
 
 class GetAllCategoriesCubit extends Cubit<GetAllCategoriesStates> {
   GetAllCategoriesCubit() : super(GetAllCategoriesInitialState());
-  List<CategoryModel>? categoriesList;
-  getHomeData() async {
+
+  getAllCategoreis() async {
     try {
+      List<CategoryModel> categoriesList = [];
       categoriesList = await GetCategoriesService().getData();
 
       emit(GetAllCategoriesLoadedState(categoriesList: categoriesList));
@@ -18,8 +19,7 @@ class GetAllCategoriesCubit extends Cubit<GetAllCategoriesStates> {
     }
   }
 
-  refereshData() async {
+  refereshData() {
     emit(GetAllCategoriesInitialState());
-    await getHomeData();
   }
 }

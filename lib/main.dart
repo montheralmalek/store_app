@@ -20,13 +20,13 @@ class StoreApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<GetAllProductsCubit>(
+        BlocProvider(
           create: (context) => GetAllProductsCubit(),
         ),
-        BlocProvider<GetAllCategoriesCubit>(
+        BlocProvider(
           create: (context) => GetAllCategoriesCubit(),
         ),
-        BlocProvider<GetCustomProductsCubit>(
+        BlocProvider(
           create: (context) => GetCustomProductsCubit(),
         ),
       ],

@@ -6,9 +6,10 @@ class GetProductsService {
   final String mainUrl = 'https://fakestoreapi.com/products';
   Future<List<ProductModel>> getData({String? categoryName}) async {
     try {
+      ApiRequest apiRequest = ApiRequest();
       String url =
           categoryName == null ? mainUrl : '$mainUrl/category/$categoryName';
-      Response response = await ApiRequest().get(httpUrl: url);
+      Response response = await apiRequest.get(httpUrl: url);
       List<ProductModel> productsList = [];
       List<dynamic> data = response.data;
       for (var element in data) {
@@ -16,7 +17,7 @@ class GetProductsService {
       }
       return productsList;
     } catch (e) {
-      throw Exception(e as String);
+      throw Exception(e);
     }
   }
 }

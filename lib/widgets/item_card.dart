@@ -18,6 +18,7 @@ class ItemCrad extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        BlocProvider.of<GetCustomProductsCubit>(context).refereshData();
         BlocProvider.of<GetCustomProductsCubit>(context)
             .getCustomProducts(category: product.category);
         Navigator.pushNamed(context, ProductView.id, arguments: product);

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 
 class ApiRequest {
   final Dio _dio = Dio();
-  late Response _response;
+  Response? _response;
   Future<Response> get({required String httpUrl, CancelToken? token}) async {
     try {
       Map<String, dynamic> headers = {};
@@ -14,13 +14,13 @@ class ApiRequest {
       }
       _response = await _dio.get(httpUrl);
 
-      return _response;
+      return _response!;
     } on DioException catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('DioException: ${_response?.statusCode} $e');
     } on SocketException {
       throw Exception('Connection Error');
     } catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('ERROR: ${_response?.statusCode} $e');
     }
   }
 
@@ -34,13 +34,13 @@ class ApiRequest {
       }
       _response = await _dio.post(url,
           data: data); //queryParameters: headers, cancelToken: token
-      return _response;
+      return _response!;
     } on DioException catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('ERROR: ${_response?.statusCode} $e');
     } on SocketException {
       throw Exception('Connection Error');
     } catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('ERROR: ${_response?.statusCode} $e');
     }
   }
 
@@ -54,13 +54,13 @@ class ApiRequest {
       }
       _response = await _dio.put(url,
           data: data); //queryParameters: headers, cancelToken: token
-      return _response;
+      return _response!;
     } on DioException catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('ERROR: ${_response?.statusCode} $e');
     } on SocketException {
       throw Exception('Connection Error');
     } catch (e) {
-      throw Exception('ERROR: ${_response.statusCode} $e');
+      throw Exception('ERROR: ${_response?.statusCode} $e');
     }
   }
 }

@@ -18,6 +18,7 @@ class CategoryCardWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        BlocProvider.of<GetCustomProductsCubit>(context).refereshData();
         BlocProvider.of<GetCustomProductsCubit>(context)
             .getCustomProducts(category: category.name);
         Navigator.pushNamed(context, CategoryProductsView.id,

@@ -42,7 +42,9 @@ class _ColorRadioListState extends State<ColorRadioList> {
               child: Container(
                 height: 20,
                 width: 20,
-                color: Color(colorValue),
+                decoration: BoxDecoration(
+                    color: Color(colorValue),
+                    border: Border.all(color: Colors.black45)),
               ),
             ),
           );

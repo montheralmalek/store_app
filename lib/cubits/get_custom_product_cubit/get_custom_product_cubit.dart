@@ -5,15 +5,18 @@ import 'package:store_app/services/get_products_service.dart';
 
 class GetCustomProductsCubit extends Cubit<GetCustomProductsStates> {
   GetCustomProductsCubit() : super(GetCustomProductsInitialState());
-  List<ProductModel>? productsList;
 
   getCustomProducts({required String category}) async {
     try {
-      emit(GetCustomProductsInitialState());
+      List<ProductModel> productsList = [];
       productsList = await GetProductsService().getData(categoryName: category);
-      emit(GetCustomProductsLoadedState(productsList: productsList!));
+      emit(GetCustomProductsLoadedState(productsList: productsList));
     } catch (e) {
       emit(GetCustomProductsFailureState(error: e.toString()));
     }
+  }
+
+  refereshData() {
+    emit(GetCustomProductsInitialState());
   }
 }
