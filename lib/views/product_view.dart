@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gap/gap.dart';
 import 'package:share/share.dart';
+import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit_states.dart';
 import 'package:store_app/models/product_model.dart';
-import 'package:store_app/widgets/circular_icon_button.dart';
+import 'package:store_app/widgets/custom_icon_button.dart';
 import 'package:store_app/widgets/color_radio_list.dart';
 import 'package:store_app/widgets/custom_button.dart';
 import 'package:store_app/widgets/failure_load.dart';
+import 'package:store_app/widgets/favorite_icon_button.dart';
 import 'package:store_app/widgets/minus_add_textfield_widget.dart';
 import 'package:store_app/widgets/products_listview_builder.dart';
 import 'package:store_app/widgets/rate_product_show_widget.dart';
@@ -52,7 +54,7 @@ class _ProductViewState extends State<ProductView> {
                   //**------------- Title ------------------*/
                   Container(
                     padding:
-                        const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                        const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
                     width: double.maxFinite,
                     decoration: BoxDecoration(
                         color: _highlightColor,
@@ -98,7 +100,7 @@ class _ProductViewState extends State<ProductView> {
                       children: [
                         //**------------- Price ------------------*/
                         Text(
-                          ' ${product.price}',
+                          ' ${product.price} \$',
                           style: const TextStyle(
                             fontSize: 14,
                             color: Colors.red,
@@ -115,6 +117,12 @@ class _ProductViewState extends State<ProductView> {
                         const Expanded(child: SizedBox()),
                         const RateProductShowWidget(
                           rateValue: 4.5,
+                        ),
+                        //** ----------- Favorite Button ----------- */
+                        FavoriteIconButton(
+                          product: product,
+                          iconSize: 18,
+                          size: 30,
                         ),
                         //** ----------- Share Button ----------- */
                         CircularIconButton(
@@ -179,7 +187,9 @@ class _ProductViewState extends State<ProductView> {
 
             SliverToBoxAdapter(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.only(
+                  top: 8.0,
+                ),
                 child: Text('See also',
                     style: Theme.of(context).textTheme.headlineSmall),
               ),
@@ -218,46 +228,49 @@ class _ProductViewState extends State<ProductView> {
           ],
         ),
       ),
-      bottomSheet: BottomSheet(
-        onClosing: () {},
-        builder: (BuildContext context) {
-          return Container(
-            height: 130,
-            padding: const EdgeInsets.all(8.0),
-            //width: double.infinity,
-            color: _highlightColor,
-            child: Column(
+      //--------------- End see also -------------------
+      //-------------------------------------------------------
+      //--------------- Start bottom sheet ------------------------
+      bottomSheet: Container(
+        height: 130,
+        padding: const EdgeInsets.all(8.0),
+        //width: double.infinity,
+        color: _highlightColor,
+        child: Column(
+          children: [
+            MinusAddTextFieldWidget(controller: _quantity),
+            const Gap(10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                MinusAddTextFieldWidget(controller: _quantity),
-                const Gap(10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Expanded(
-                      child: CustomButton(
-                        height: 48,
-                        text: const Text('Add to cart'),
-                        icon: const Icon(Icons.add_shopping_cart),
-                        onTap: () {},
-                      ),
-                    ),
-                    const Gap(20),
-                    Expanded(
-                      child: CustomButton(
-                        color: Colors.amberAccent,
-                        textColor: Colors.black,
-                        height: 48,
-                        text: const Text('Go to cart'),
-                        icon: const Icon(Icons.shopping_basket_outlined),
-                        onTap: () {},
-                      ),
-                    ),
-                  ],
+                // ------------------ Add To Cart Button ---------------
+                Expanded(
+                  child: CustomButton(
+                    height: 48,
+                    text: const Text('Add to cart'),
+                    icon: const Icon(Icons.add_shopping_cart),
+                    onTap: () {
+                      BlocProvider.of<CartCubit>(context)
+                          .addItem(product: product, quantity: 1);
+                    },
+                  ),
+                ),
+                const Gap(20),
+                // ------------------ Go To Cart Button ---------------
+                Expanded(
+                  child: CustomButton(
+                    color: Colors.amberAccent,
+                    textColor: Colors.black,
+                    height: 48,
+                    text: const Text('Go to cart'),
+                    icon: const Icon(Icons.shopping_basket_outlined),
+                    onTap: () {},
+                  ),
                 ),
               ],
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

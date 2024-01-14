@@ -4,7 +4,8 @@ import 'package:gap/gap.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/views/product_view.dart';
-import 'package:store_app/widgets/circular_icon_button.dart';
+import 'package:store_app/widgets/add_to_cart_button.dart';
+import 'package:store_app/widgets/favorite_icon_button.dart';
 import 'package:store_app/widgets/rate_product_show_widget.dart';
 
 class ItemCrad extends StatelessWidget {
@@ -56,11 +57,11 @@ class ItemCrad extends StatelessWidget {
                       Positioned(
                         top: 5,
                         right: 5,
-                        child: CircularIconButton(
-                          icon: Icons.favorite_border,
+                        child: FavoriteIconButton(
+                          product: product,
                           backgroundColor: Colors.grey.shade100,
                           size: 40,
-                          onPressed: () {},
+                          boxShape: BoxShape.circle,
                         ),
                       ),
                       //** ------- Rate Show ----------- */
@@ -76,11 +77,11 @@ class ItemCrad extends StatelessWidget {
                       Positioned(
                         bottom: 5,
                         right: 5,
-                        child: CircularIconButton(
-                          icon: Icons.add_shopping_cart_outlined,
+                        child: AddToCartButton(
+                          product: product,
                           backgroundColor: Colors.grey.shade100,
+                          boxShape: BoxShape.circle,
                           size: 40,
-                          onPressed: () {},
                         ),
                       ),
                     ],

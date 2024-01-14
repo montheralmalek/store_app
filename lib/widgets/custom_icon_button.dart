@@ -9,11 +9,15 @@ class CircularIconButton extends StatelessWidget {
     this.iconSize,
     this.backgroundColor,
     this.iconColor,
+    this.boxShape = BoxShape.circle,
+    this.borderRadius,
   });
   final double? size, iconSize;
   final IconData icon;
   final VoidCallback onPressed;
   final Color? backgroundColor, iconColor;
+  final BoxShape boxShape;
+  final BorderRadiusGeometry? borderRadius;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +26,8 @@ class CircularIconButton extends StatelessWidget {
       width: size,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        borderRadius: borderRadius,
+        shape: boxShape,
         color: backgroundColor,
       ),
       child: IconButton(

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/widgets/customtextfield.dart';
 
 class MinusAddTextFieldWidget extends StatefulWidget {
   const MinusAddTextFieldWidget({
@@ -38,13 +37,23 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
           icon: const Icon(Icons.remove),
         ),
         SizedBox(
-          width: 60,
-          height: 45,
-          child: CustomTextFormField(
+          width: 50,
+          height: 40,
+          child: TextFormField(
+            textInputAction: TextInputAction.done,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.onBackground,
+            ),
+            enabled: false,
             controller: widget.controller,
             textAlign: TextAlign.center,
-            labeltext: '',
-            inputType: TextInputType.number,
+            keyboardType: TextInputType.number,
+            decoration: InputDecoration(
+                contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                border: const OutlineInputBorder(),
+                disabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: Theme.of(context).colorScheme.onBackground))),
           ),
         ),
         IconButton(

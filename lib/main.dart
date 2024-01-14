@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cubit.dart';
 import 'package:store_app/cubits/get_all_products/get_all_products_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
@@ -28,6 +29,9 @@ class StoreApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => GetCustomProductsCubit(),
+        ),
+        BlocProvider(
+          create: (context) => CartCubit(),
         ),
       ],
       child: MaterialApp(

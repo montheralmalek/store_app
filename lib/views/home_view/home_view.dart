@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/views/cart_view.dart';
 import 'package:store_app/views/home_view/home_body_builder.dart';
 import 'package:store_app/widgets/floating_action_button.dart';
 import 'package:store_app/widgets/main_app_bar.dart';
@@ -53,13 +54,7 @@ class _HomeViewState extends State<HomeView> {
                 ),
               );
             } else if (index == 2) {
-              return Center(
-                child: Text(
-                  'cart page $index',
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w800),
-                ),
-              );
+              return const CartView();
             } else {
               return Center(
                 child: Text(
