@@ -7,38 +7,66 @@ class CartCubit extends Cubit<CartCubitStates> {
   CartCubit() : super(CartCubitHasNotDataState());
   final List<CartModel> _items = [];
   double _totalPrice = 0.0;
-  void setCartCubitState() {
-    count > 0
-        ? emit(CartCubitHasDataState(_items))
-        : emit(CartCubitHasNotDataState());
-  }
 
   void addItem({required ProductModel product, required int quantity}) {
-    _items.add(CartModel(product: product, quantity: quantity));
-    _totalPrice += product.price * quantity;
-    //notifyListeners();
-    emit(CartCubitHasDataState(_items));
+    int searchResult = _searchInItems(product.title);
+
+    if (searchResult == -1) {
+      _items.add(CartModel(product: product, quantity: quantity));
+      _setTotalPrice();
+    } else {
+      editQuantity(searchResult, _items[searchResult].quantity + quantity);
+    }
+    emit(CartCubitHasDataState(_items, _totalPrice));
+  }
+
+  void editQuantity(int index, int value) {
+    _items[index].quantity = value;
+    _setTotalPrice();
+    emit(CartCubitHasDataState(_items, _totalPrice));
   }
 
   void removeItem(int index) {
     _items.removeAt(index);
-    count > 0
-        ? emit(CartCubitHasDataState(_items))
+    _setTotalPrice();
+    _items.isNotEmpty
+        ? emit(CartCubitHasDataState(_items, _totalPrice))
         : emit(CartCubitHasNotDataState());
-    //notifyListeners();
   }
 
-  int get count {
-    return _items.length;
+  void _setTotalPrice() {
+    if (_items.isNotEmpty) {
+      _totalPrice = 0;
+      for (var element in _items) {
+        _totalPrice += element.product.price * element.quantity;
+      }
+    }
   }
 
-  double get totalPrice {
-    return _totalPrice;
+  int _searchInItems(String title) {
+    int result = -1;
+    if (_items.isNotEmpty) {
+      for (var i = 0; i < _items.length; i++) {
+        if (_items[i].product.title == title) {
+          result = i;
+          return result;
+        }
+      }
+    }
+    return result;
   }
 
-  List<CartModel> get getItems {
-    return _items;
-  }
+  // int get getCount {
+  //   return _items.length;
+  // }
+
+  // double get getTotalPrice {
+  //   return _totalPrice;
+  // }
+
+  // List<CartModel> get getItems {
+  //   return _items;
+  // }
 
   // checkCartData() {
   //   BasketItems().count>0

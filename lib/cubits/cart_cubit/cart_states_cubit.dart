@@ -6,7 +6,8 @@ class CartCubitInitialState extends CartCubitStates {}
 
 class CartCubitHasDataState extends CartCubitStates {
   final List<CartModel> items;
-  CartCubitHasDataState(this.items);
+  final double totalPrice;
+  CartCubitHasDataState(this.items, this.totalPrice);
 }
 
 class CartCubitHasNotDataState extends CartCubitStates {}

@@ -1,12 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
 
 class MinusAddTextFieldWidget extends StatefulWidget {
+  // void editValu(BuildContext context, int index, String value) {
+  //   BlocProvider.of<CartCubit>(context).editQuantity(index, int.parse(value));
+  // }
+
   const MinusAddTextFieldWidget({
     super.key,
     required this.controller,
+    this.index,
   });
 
   final TextEditingController controller;
+  final int? index;
 
   @override
   State<MinusAddTextFieldWidget> createState() =>
@@ -18,7 +26,9 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
   int value = 0;
   @override
   void initState() {
-    widget.controller.text = '1';
+    widget.controller.text.isEmpty
+        ? widget.controller.text = '1'
+        : widget.controller.text = widget.controller.text;
     super.initState();
   }
 
@@ -33,8 +43,12 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
             setState(() {
               widget.controller.text = value > 1 ? '${value - 1}' : '$value';
             });
+            if (widget.index != null) {
+              BlocProvider.of<CartCubit>(context).editQuantity(
+                  widget.index!, int.parse(widget.controller.text));
+            }
           },
-          icon: const Icon(Icons.remove),
+          icon: const Icon(Icons.remove_circle_outline),
         ),
         SizedBox(
           width: 50,
@@ -57,13 +71,18 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
           ),
         ),
         IconButton(
+          padding: EdgeInsets.zero,
           onPressed: () {
             value = int.parse(widget.controller.text);
             setState(() {
               widget.controller.text = '${value + 1}';
             });
+            if (widget.index != null) {
+              BlocProvider.of<CartCubit>(context).editQuantity(
+                  widget.index!, int.parse(widget.controller.text));
+            }
           },
-          icon: const Icon(Icons.add),
+          icon: const Icon(Icons.add_circle_outline),
         ),
       ],
     );
