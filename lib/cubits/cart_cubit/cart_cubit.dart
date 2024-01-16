@@ -40,6 +40,7 @@ class CartCubit extends Cubit<CartCubitStates> {
       for (var element in _items) {
         _totalPrice += element.product.price * element.quantity;
       }
+      _totalPrice = double.parse(_totalPrice.toStringAsFixed(2));
     }
   }
 

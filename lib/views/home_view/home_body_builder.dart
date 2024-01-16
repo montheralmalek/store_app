@@ -61,7 +61,7 @@ class HomeBodyBiulder extends StatelessWidget {
                   child: Center(
                     child: CircularProgressIndicator(),
                   ),
-                ); //Text('HomeDataInitialState');
+                );
               } else if (state is GetAllProductsLoadedState) {
                 return ProductsListViewBuilder(
                     productsList: state.productsList);

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
+import 'package:store_app/cubits/cart_cubit/cart_states_cubit.dart';
+import 'package:store_app/views/cart_view.dart';
 
 class MainAppBar extends StatelessWidget {
   const MainAppBar({
@@ -10,11 +14,40 @@ class MainAppBar extends StatelessWidget {
     return AppBar(
       elevation: 0,
       title: const Text('New Trend'),
-      actions: const [
-        Icon(
+      actions: [
+        const Icon(
           Icons.search,
           size: 26,
-        )
+        ),
+        BlocBuilder<CartCubit, CartCubitStates>(
+          builder: (context, state) {
+            int? itemsCount =
+                state is CartCubitHasDataState ? state.items.length : null;
+            return Stack(
+              children: [
+                //**-----------start cart button ------------------ */
+                IconButton(
+                  onPressed: () => Navigator.pushNamed(context, CartView.id),
+                  icon: const Icon(Icons.shopping_cart_outlined),
+                ),
+                //**----------- Start Notification -----------------*/
+                itemsCount != null
+                    ? Positioned(
+                        top: -5,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Text('$itemsCount'),
+                        ),
+                      )
+                    : const SizedBox(),
+              ],
+            );
+          },
+        ),
       ],
       leading: const Icon(
         Icons.list,

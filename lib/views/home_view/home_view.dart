@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:store_app/views/cart_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/cubits/home_pages_cubits/home_pages_cubit.dart';
+import 'package:store_app/cubits/home_pages_cubits/home_pages_states.dart';
+import 'package:store_app/views/favorite_view.dart';
 import 'package:store_app/views/home_view/home_body_builder.dart';
 import 'package:store_app/widgets/floating_action_button.dart';
 import 'package:store_app/widgets/main_app_bar.dart';
@@ -17,7 +20,6 @@ class HomeView extends StatefulWidget {
 class _HomeViewState extends State<HomeView> {
   final PageController _pageController = PageController();
 
-  int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,62 +27,44 @@ class _HomeViewState extends State<HomeView> {
         preferredSize: Size.fromHeight(80),
         child: MainAppBar(),
       ),
-      bottomNavigationBar: MainBottomNavigationBar(
-        selectedItem: _selectedIndex,
-        onTap: (value) {
-          setState(() {
-            _selectedIndex = value;
-            _pageController.jumpToPage(value);
-          });
+      body: BlocBuilder<HomePagesCubit, HomePagesStates>(
+        builder: (context, state) {
+          return PageView.builder(
+              controller: _pageController,
+              itemCount: 4,
+              itemBuilder: (context, index) {
+                if (state is InitialHomePageState) {
+                  _pageController.jumpToPage(state.index);
+                  return const HomeBodyBiulder();
+                } else if (state is CategoriesHomePageState) {
+                  _pageController.jumpToPage(state.index);
+                  return Center(
+                    child: Text(
+                      'Categories page $index',
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w800),
+                    ),
+                  );
+                } else if (state is FavoriteHomePageState) {
+                  _pageController.jumpToPage(state.index);
+                  return const FavoritView(); //const CartView();
+                } else {
+                  if (state is AccountHomePageState) {
+                    _pageController.jumpToPage(state.index);
+                  }
+                  return Center(
+                    child: Text(
+                      'Account page $index',
+                      style: const TextStyle(
+                          fontSize: 28, fontWeight: FontWeight.w800),
+                    ),
+                  );
+                }
+              });
         },
       ),
-      body: PageView.builder(
-          controller: _pageController,
-          itemCount: 4,
-          onPageChanged: (value) {
-            setState(() {
-              _selectedIndex = value;
-            });
-          },
-          itemBuilder: (context, index) {
-            if (index == 0) {
-              return const HomeBodyBiulder();
-            } else if (index == 1) {
-              return Center(
-                child: Text(
-                  'products page $index',
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w800),
-                ),
-              );
-            } else if (index == 2) {
-              return const CartView();
-            } else {
-              return Center(
-                child: Text(
-                  'favorite page $index',
-                  style: const TextStyle(
-                      fontSize: 28, fontWeight: FontWeight.w800),
-                ),
-              );
-            }
-          }),
+      bottomNavigationBar: const MainBottomNavigationBar(),
       floatingActionButton: const CustomFloatingActionButton(),
-    );
-  }
-}
-
-class HomeInitial extends StatelessWidget {
-  const HomeInitial({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const SliverToBoxAdapter(
-      child: Center(
-        child: CircularProgressIndicator(),
-      ),
     );
   }
 }

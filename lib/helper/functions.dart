@@ -16,6 +16,16 @@ void showMessage(BuildContext context, String message) {
   );
 }
 
+//** ------------------- Int With String To String------------- */
+String intWithString(int num, String word) {
+  String result = '';
+  result += '$num $word';
+  if (num > 1) {
+    result += 's';
+  }
+  return result;
+}
+
 String? emptyValidate(String? value) {
   if (value!.isEmpty) {
     return 'This field is required';

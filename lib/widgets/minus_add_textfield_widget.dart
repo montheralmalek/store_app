@@ -38,6 +38,7 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
+          color: Theme.of(context).colorScheme.primary,
           onPressed: () {
             value = int.parse(widget.controller.text);
             setState(() {
@@ -67,10 +68,11 @@ class _MinusAddTextFieldWidgetState extends State<MinusAddTextFieldWidget> {
                 border: const OutlineInputBorder(),
                 disabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: Theme.of(context).colorScheme.onBackground))),
+                        color: Theme.of(context).colorScheme.primary))),
           ),
         ),
         IconButton(
+          color: Theme.of(context).colorScheme.primary,
           padding: EdgeInsets.zero,
           onPressed: () {
             value = int.parse(widget.controller.text);

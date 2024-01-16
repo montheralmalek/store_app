@@ -31,14 +31,10 @@ class _ProductViewState extends State<ProductView> {
   final TextEditingController _quantity = TextEditingController();
   late ProductModel product;
   final Color _highlightColor = Colors.blueGrey.shade50;
-  // @override
-  // void initState() {
-  //   product = ModalRoute.of(context)!.settings.arguments as ProductModel;
-  //   super.initState();
-  // }
 
   @override
   Widget build(BuildContext context) {
+    // _highlightColor = Colors.deepPurple;
     product = ModalRoute.of(context)!.settings.arguments as ProductModel;
     return Scaffold(
       appBar: AppBar(
@@ -70,19 +66,22 @@ class _ProductViewState extends State<ProductView> {
                   //const Gap(10),
                   // const Divider(),
                   //**------------- Image ------------------*/
-                  Container(
-                    padding: const EdgeInsets.symmetric(vertical: 10),
-                    width: double.maxFinite,
-                    decoration: BoxDecoration(
-                      border: Border.symmetric(
-                        vertical: BorderSide(
-                          color: _highlightColor,
+                  GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10),
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                        border: Border.symmetric(
+                          vertical: BorderSide(
+                            color: _highlightColor,
+                          ),
                         ),
                       ),
-                    ),
-                    child: Image(
-                      image: NetworkImage(product.img),
-                      height: 200,
+                      child: Image(
+                        image: NetworkImage(product.img),
+                        height: 200,
+                      ),
                     ),
                   ),
                   //**------------- Price and Rate ------------------*/
@@ -230,45 +229,25 @@ class _ProductViewState extends State<ProductView> {
       ),
       //--------------- End see also -------------------
       //-------------------------------------------------------
-      //--------------- Start bottom sheet ------------------------
-      bottomSheet: Container(
-        height: 130,
-        padding: const EdgeInsets.all(8.0),
-        //width: double.infinity,
-        color: _highlightColor,
-        child: Column(
+      //--------------- Start bottom navigationbar ------------------------
+      bottomNavigationBar: Container(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            MinusAddTextFieldWidget(controller: _quantity),
-            const Gap(10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                // ------------------ Add To Cart Button ---------------
-                Expanded(
-                  child: CustomButton(
-                    height: 48,
-                    text: const Text('Add to cart'),
-                    icon: const Icon(Icons.add_shopping_cart),
-                    onTap: () {
-                      BlocProvider.of<CartCubit>(context).addItem(
-                          product: product,
-                          quantity: int.parse(_quantity.text));
-                    },
-                  ),
-                ),
-                const Gap(20),
-                // ------------------ Go To Cart Button ---------------
-                Expanded(
-                  child: CustomButton(
-                    color: Colors.amberAccent,
-                    textColor: Colors.black,
-                    height: 48,
-                    text: const Text('Go to cart'),
-                    icon: const Icon(Icons.shopping_basket_outlined),
-                    onTap: () {},
-                  ),
-                ),
-              ],
+            Expanded(child: MinusAddTextFieldWidget(controller: _quantity)),
+            // ------------------ Add To Cart Button ---------------
+            Expanded(
+              child: CustomButton(
+                borderRadius: BorderRadius.circular(10),
+                height: 48,
+                text: const Text('Add to cart'),
+                icon: const Icon(Icons.add_shopping_cart),
+                onTap: () {
+                  BlocProvider.of<CartCubit>(context).addItem(
+                      product: product, quantity: int.parse(_quantity.text));
+                },
+              ),
             ),
           ],
         ),
@@ -277,13 +256,11 @@ class _ProductViewState extends State<ProductView> {
   }
 
   void _onShare() async {
-    // final box = context.findRenderObject() as RenderBox?;
-    debugPrint('------${product.img} --');
+    final box = context.findRenderObject() as RenderBox?;
     await Share.share(
       product.img,
       subject: 'new',
-      //sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
+      sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size,
     );
-    debugPrint('------${product.img} --');
   }
 }
