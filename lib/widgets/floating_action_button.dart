@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/constants.dart';
+import 'package:store_app/widgets/not_logedin_widget.dart';
 
 class CustomFloatingActionButton extends StatelessWidget {
   const CustomFloatingActionButton({
@@ -18,47 +20,29 @@ class CustomFloatingActionButton extends StatelessWidget {
           //color: Theme.of(context).colorScheme.primary,
         ),
         onPressed: () {
-          chatDialog(context);
+          if (isLogedIn) {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const AlertDialog(
+                    content: Center(
+                      child: Text('You are loged in'),
+                    ),
+                    //actions: <Widget>[],
+                  );
+                });
+          } else {
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const AlertDialog(
+                    content: NotLogedInWidget(),
+                    //actions: <Widget>[],
+                  );
+                });
+          }
         }, // Navigator.pushNamed(context, AddProductView.id),
       ),
     );
-  }
-
-  Future<dynamic> chatDialog(BuildContext context) {
-    return showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            content: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                const Text(
-                  'Have an account please',
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'Login',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                const Text(
-                  'or',
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    'sign Up',
-                    style: TextStyle(fontSize: 18),
-                  ),
-                ),
-                const Text(
-                  'if you dont have an account.',
-                ),
-              ],
-            ),
-            //actions: <Widget>[],
-          );
-        });
   }
 }

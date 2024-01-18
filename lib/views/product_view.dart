@@ -6,6 +6,7 @@ import 'package:share/share.dart';
 import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit_states.dart';
+import 'package:store_app/helper/functions.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/widgets/custom_icon_button.dart';
 import 'package:store_app/widgets/color_radio_list.dart';
@@ -246,6 +247,7 @@ class _ProductViewState extends State<ProductView> {
                 onTap: () {
                   BlocProvider.of<CartCubit>(context).addItem(
                       product: product, quantity: int.parse(_quantity.text));
+                  addToCartDialog(context, product, int.parse(_quantity.text));
                 },
               ),
             ),

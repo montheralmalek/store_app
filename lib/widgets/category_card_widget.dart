@@ -8,11 +8,12 @@ class CategoryCardWidget extends StatelessWidget {
   const CategoryCardWidget({
     super.key,
     required this.category,
-    required this.width,
+    this.width,
+    this.height,
     this.circularRadius = 100,
   });
   final CategoryModel category;
-  final double width;
+  final double? width, height;
   final double circularRadius;
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class CategoryCardWidget extends StatelessWidget {
       child: Container(
         clipBehavior: Clip.hardEdge,
         alignment: Alignment.center,
-        width: width,
+        width: width, height: height,
         //margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
         decoration: BoxDecoration(
           image: DecorationImage(

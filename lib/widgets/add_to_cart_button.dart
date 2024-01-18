@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/cubits/cart_cubit/cart_cubit.dart';
+import 'package:store_app/helper/functions.dart';
 import 'package:store_app/models/product_model.dart';
-import 'package:store_app/views/cart_view.dart';
 
 class AddToCartButton extends StatelessWidget {
   const AddToCartButton({
@@ -43,53 +43,7 @@ class AddToCartButton extends StatelessWidget {
         onPressed: () {
           BlocProvider.of<CartCubit>(context)
               .addItem(product: product, quantity: quantity);
-          showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  actionsAlignment: MainAxisAlignment.center,
-                  iconColor: Colors.green,
-                  icon: const Icon(
-                    Icons.task_alt,
-                    size: 48,
-                  ),
-                  content: SizedBox(
-                    height: 150,
-                    width: 200,
-                    child: Column(
-                      children: [
-                        Text(
-                          product.title,
-                        ),
-                        Row(
-                          children: [
-                            const Text('QTY: '),
-                            Text(quantity.toString()),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            const Text('Total Price: '),
-                            Text('${quantity * product.price}'),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  actions: [
-                    ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          Navigator.pushNamed(context, CartView.id);
-                        },
-                        child: const Text('go to cart')),
-                    ElevatedButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Text('continue'),
-                    ),
-                  ],
-                );
-              });
+          addToCartDialog(context, product, quantity);
         },
       ),
     );

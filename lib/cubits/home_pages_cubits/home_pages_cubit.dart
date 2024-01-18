@@ -4,6 +4,18 @@ import 'package:store_app/cubits/home_pages_cubits/home_pages_states.dart';
 class HomePagesCubit extends Cubit<HomePagesStates> {
   HomePagesCubit() : super(InitialHomePageState());
   int _selectedIndex = 0;
+  setSelectedIndex(int index) {
+    if (index == 0) {
+      homePage();
+    } else if (index == 1) {
+      categoriesPage();
+    } else if (index == 2) {
+      favoritePag();
+    } else {
+      accountPage();
+    }
+  }
+
   homePage() {
     _selectedIndex = 0;
     emit(InitialHomePageState());

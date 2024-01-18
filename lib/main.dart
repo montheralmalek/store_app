@@ -10,7 +10,9 @@ import 'package:store_app/views/add_product.dart';
 import 'package:store_app/views/cart_view.dart';
 import 'package:store_app/views/category_product_view.dart';
 import 'package:store_app/views/home_view/home_view.dart';
+import 'package:store_app/views/login_view.dart';
 import 'package:store_app/views/product_view.dart';
+import 'package:store_app/views/signup_view.dart';
 import 'package:store_app/views/update_product_view.dart';
 
 void main() {
@@ -51,6 +53,8 @@ class StoreApp extends StatelessWidget {
           AddProductView.id: (context) => const AddProductView(),
           ProductView.id: (context) => const ProductView(),
           CartView.id: (context) => const CartView(),
+          LoginView.id: (context) => const LoginView(),
+          SignUpView.id: (context) => const SignUpView(),
         },
         initialRoute: HomeView.id,
         debugShowCheckedModeBanner: false,
