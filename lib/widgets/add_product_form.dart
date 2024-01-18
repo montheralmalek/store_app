@@ -8,7 +8,7 @@ import 'package:store_app/helper/functions.dart';
 import 'package:store_app/services/add_product_service.dart';
 import 'package:store_app/widgets/custom_button.dart';
 import 'package:store_app/widgets/custom_dropdown_menu.dart';
-import 'package:store_app/widgets/customtextfield.dart';
+import 'package:store_app/widgets/custom_textfield.dart';
 
 class AddProductForm extends StatefulWidget {
   const AddProductForm({

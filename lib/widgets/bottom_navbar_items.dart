@@ -30,24 +30,23 @@ class BNavBarItem extends StatelessWidget {
           ]),
         ),
         //----------- Start Notification --------------------
-        notification != null
-            ? Positioned(
-                top: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(5),
-                  decoration: const BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Text(
-                    '$notification',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              )
-            : const SizedBox(),
+        if (notification != null)
+          Positioned(
+            top: 10,
+            child: Container(
+              padding: const EdgeInsets.all(5),
+              decoration: const BoxDecoration(
+                color: Colors.red,
+                shape: BoxShape.circle,
+              ),
+              child: Text(
+                '$notification',
+                style: TextStyle(
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontSize: 10),
+              ),
+            ),
+          ),
       ],
     );
   }

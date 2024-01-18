@@ -39,6 +39,8 @@ class CustomTextFormField extends StatelessWidget {
       controller: controller,
       maxLines: maxlines,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         prefixIcon: prefixicon,
         suffixIcon: suffixicon,

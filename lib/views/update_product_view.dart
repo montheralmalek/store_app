@@ -5,7 +5,7 @@ import 'package:store_app/helper/functions.dart';
 import 'package:store_app/models/product_model.dart';
 import 'package:store_app/services/update_product_sevice.dart';
 import 'package:store_app/widgets/custom_button.dart';
-import 'package:store_app/widgets/customtextfield.dart';
+import 'package:store_app/widgets/custom_textfield.dart';
 
 class UpdateProductView extends StatefulWidget {
   const UpdateProductView({

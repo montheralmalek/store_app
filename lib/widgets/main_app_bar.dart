@@ -31,19 +31,22 @@ class MainAppBar extends StatelessWidget {
                   icon: const Icon(Icons.shopping_cart_outlined),
                 ),
                 //**----------- Start Notification -----------------*/
-                itemsCount != null
-                    ? Positioned(
-                        top: -5,
-                        child: Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(
-                            color: Colors.red,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text('$itemsCount'),
-                        ),
-                      )
-                    : const SizedBox(),
+                if (itemsCount != null)
+                  Positioned(
+                    top: -5,
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(5),
+                      decoration: const BoxDecoration(
+                        color: Colors.red,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Text(
+                        '$itemsCount',
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                    ),
+                  ),
               ],
             );
           },
