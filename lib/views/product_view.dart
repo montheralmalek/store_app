@@ -244,7 +244,7 @@ class _ProductViewState extends State<ProductView> {
                 height: 48,
                 text: const Text('Add to cart'),
                 icon: const Icon(Icons.add_shopping_cart),
-                onTap: () {
+                onPressed: () {
                   BlocProvider.of<CartCubit>(context).addItem(
                       product: product, quantity: int.parse(_quantity.text));
                   addToCartDialog(context, product, int.parse(_quantity.text));

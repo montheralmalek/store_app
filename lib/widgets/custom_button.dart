@@ -1,41 +1,41 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.onTap,
+    required this.onPressed,
     required this.text,
     this.icon,
-    this.height,
+    this.height = 40,
+    this.width = double.infinity,
     this.color,
     this.textColor,
     this.borderRadius = BorderRadius.zero,
+    this.borderSide,
   });
   final Widget text;
   final Icon? icon;
-  final VoidCallback onTap;
-  final double? height;
+  final VoidCallback onPressed;
+  final double height, width;
+  final BorderSide? borderSide;
   final Color? color, textColor;
   final BorderRadiusGeometry borderRadius;
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-      onPressed: onTap,
-      textColor: textColor ?? Theme.of(context).colorScheme.onPrimary,
-      color: color ?? Theme.of(context).colorScheme.primary,
-      // minWidth: 100,
-      height: height,
-      shape: ContinuousRectangleBorder(borderRadius: borderRadius),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          text,
-          const Gap(10),
-          icon ?? const Icon(null),
-        ],
-      ),
+    return ElevatedButton.icon(
+      onPressed: onPressed,
+      icon: icon ?? const SizedBox(),
+      label: text,
+      style: ButtonStyle(
+          iconColor: MaterialStateProperty.all(textColor),
+          textStyle: MaterialStateProperty.all(TextStyle(
+            color: textColor,
+          )),
+          backgroundColor: MaterialStateProperty.all(color),
+          shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(borderRadius: borderRadius)),
+          side: MaterialStateProperty.all(borderSide),
+          minimumSize: MaterialStateProperty.all(Size(width, height))),
     );
   }
 }

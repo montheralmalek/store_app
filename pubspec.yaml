@@ -43,6 +43,8 @@ dependencies:
   carousel_slider: ^4.2.1
   expandable_text: ^2.3.0
   share: ^2.0.4
+  local_auth: ^2.1.8
+  local_auth_android: ^1.0.36
   
 
 dev_dependencies:

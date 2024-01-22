@@ -11,6 +11,7 @@ class PasswordTextFormField extends StatefulWidget {
     this.controller,
     this.validator,
     this.onsave,
+    this.radius = 4,
   });
   final String hinttext;
   final String labeltext;
@@ -18,6 +19,7 @@ class PasswordTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function(String?)? onsave;
+  final double radius;
 
   @override
   State<PasswordTextFormField> createState() => _PasswordTextFormFieldState();
@@ -36,7 +38,8 @@ class _PasswordTextFormFieldState extends State<PasswordTextFormField> {
         filled: true,
         fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(widget.radius))),
         hintText: widget.hinttext,
         label: Text(widget.labeltext),
         prefixIcon: widget.prefixicon,

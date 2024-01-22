@@ -107,7 +107,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 SizedBox(
                   width: 150,
                   child: CustomButton(
-                    onTap: () async {
+                    onPressed: () async {
                       if (_formKeyState.currentState!.validate() &&
                           categoryValue.isNotEmpty) {
                         try {
@@ -141,7 +141,7 @@ class _AddProductFormState extends State<AddProductForm> {
                 SizedBox(
                   width: 150,
                   child: CustomButton(
-                    onTap: () async {
+                    onPressed: () async {
                       Navigator.pop(context);
                     },
                     text: const Text('Cancel'),

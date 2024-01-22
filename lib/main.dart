@@ -6,6 +6,7 @@ import 'package:store_app/cubits/get_all_categories_cubit/get_all_categories_cub
 import 'package:store_app/cubits/get_all_products/get_all_products_cubit.dart';
 import 'package:store_app/cubits/get_custom_product_cubit/get_custom_product_cubit.dart';
 import 'package:store_app/cubits/home_pages_cubits/home_pages_cubit.dart';
+import 'package:store_app/cubits/session_cubits/session_cubit.dart';
 import 'package:store_app/views/add_product.dart';
 import 'package:store_app/views/cart_view.dart';
 import 'package:store_app/views/category_product_view.dart';
@@ -44,6 +45,9 @@ class StoreApp extends StatelessWidget {
         BlocProvider(
           create: (context) => HomePagesCubit(),
         ),
+        BlocProvider(
+          create: (context) => SessionCubit(),
+        )
       ],
       child: MaterialApp(
         routes: {

@@ -82,7 +82,7 @@ class _UpdateProductViewState extends State<UpdateProductView> {
                         SizedBox(
                           width: 150,
                           child: CustomButton(
-                            onTap: () async {
+                            onPressed: () async {
                               try {
                                 setState(() {
                                   _isLoading = true;
@@ -122,7 +122,7 @@ class _UpdateProductViewState extends State<UpdateProductView> {
                         SizedBox(
                           width: 150,
                           child: CustomButton(
-                            onTap: () async {
+                            onPressed: () async {
                               Navigator.pop(context);
                             },
                             text: const Text('Cancel'),

@@ -16,6 +16,7 @@ class CustomTextFormField extends StatelessWidget {
     this.maxlines = 1,
     this.initialValue,
     this.textAlign = TextAlign.start,
+    this.radius = 4,
   });
   final TextInputType? inputType;
   final String? hinttext;
@@ -28,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
   final Function(String?)? onsave;
   final String? initialValue;
   final TextAlign textAlign;
+  final double radius;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -44,7 +46,8 @@ class CustomTextFormField extends StatelessWidget {
         contentPadding: const EdgeInsets.symmetric(horizontal: 10),
         prefixIcon: prefixicon,
         suffixIcon: suffixicon,
-        border: const OutlineInputBorder(),
+        border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(radius))),
         hintText: hinttext,
         label: Text(labeltext),
       ),
