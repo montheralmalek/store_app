@@ -30,7 +30,7 @@ class _LoginViewState extends State<LoginView> {
   _SupportState _supportState = _SupportState.unknown;
   String _authorized = 'Not Authorized';
   bool _isAuthenticating = false;
-  final bool _isLoading = false;
+  //final bool _isLoading = false;
 
   @override
   void initState() {
