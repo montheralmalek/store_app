@@ -1,4 +1,4 @@
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:carousel_slider/carousel_slider.dart' as cs;
 import 'package:flutter/material.dart';
 import 'package:store_app/widgets/category_card_widget.dart';
 
@@ -14,7 +14,7 @@ class ImageCarouselSlider extends StatefulWidget {
 }
 
 class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
-  final CarouselController _carouselController = CarouselController();
+  final cs.CarouselController _carouselController = cs.CarouselController();
 
   int current = 0;
 
@@ -23,7 +23,7 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
     return Column(
       // color: Colors.amber,
       children: [
-        CarouselSlider.builder(
+        cs.CarouselSlider.builder(
           carouselController: _carouselController,
           itemCount: widget.imageList.length, //state.categoriesList!.length,
           itemBuilder:
@@ -36,13 +36,13 @@ class _ImageCarouselSliderState extends State<ImageCarouselSlider> {
               circularRadius: 10,
             ),
           ),
-          options: CarouselOptions(
+          options: cs.CarouselOptions(
             height: 200,
             autoPlay: true,
             autoPlayInterval: const Duration(seconds: 5),
             enableInfiniteScroll: true,
             enlargeCenterPage: true,
-            enlargeStrategy: CenterPageEnlargeStrategy.height,
+            enlargeStrategy: cs.CenterPageEnlargeStrategy.height,
             onPageChanged: (index, reason) {
               setState(() {
                 current = index;

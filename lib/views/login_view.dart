@@ -108,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return ModalProgressHUD(
-      inAsyncCall: _isLoading,
+      inAsyncCall: false,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.only(top: 50.0),
